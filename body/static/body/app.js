@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const snakes = JSON.parse(document.getElementById('snakes-data').textContent);
   const ladders = JSON.parse(document.getElementById('ladders-data').textContent);
   let state = JSON.parse(document.getElementById('state-data').textContent);
+  const ladderTargets = new Set(Object.values(ladders));
+  const snakeTargets = new Set(Object.values(snakes));
 
   const cells = serpentineNumbers();
   renderBoard(cells);
@@ -99,6 +101,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (ladders[num]) cell.classList.add('cell--ladder');
       if (snakes[num]) cell.classList.add('cell--snake');
+      if (ladderTargets.has(num)) cell.classList.add('cell--ladder-target');
+      if (snakeTargets.has(num)) cell.classList.add('cell--snake-target');
+
+      if (ladders[num]) {
+        const badge = document.createElement('div');
+        badge.className = 'marker marker--ladder';
+        badge.innerHTML = `<span class="marker__dot"></span>Up to ${ladders[num]}`;
+        cell.appendChild(badge);
+      }
+
+      if (snakes[num]) {
+        const badge = document.createElement('div');
+        badge.className = 'marker marker--snake';
+        badge.innerHTML = `<span class="marker__dot"></span>Down to ${snakes[num]}`;
+        cell.appendChild(badge);
+      }
 
       boardEl.appendChild(cell);
     });
