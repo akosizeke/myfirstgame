@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Snakes &amp; Ladders</title>
+    <link rel="stylesheet" href="{% static 'body/style.css' %}">
+    <script defer src="{% static 'body/app.js' %}"></script>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Python + Django</p>
+                <h1>Snakes &amp; Ladders</h1>
+                <p class="lede">Local 2‑player, pass‑and‑play. Roll the die, climb ladders, dodge snakes.</p>
+            </div>
+            <div class="actions">
+                <button id="rollBtn" class="btn btn-primary">Roll Dice</button>
+                <button id="resetBtn" class="btn btn-ghost">New Game</button>
+            </div>
+        </header>
+
+        <section class="dashboard">
+            <div class="panel scoreboard">
+                <div class="score-card">
+                    <div class="pill pill-p1" id="turnPill">Turn: P1</div>
+                    <div class="score-body">
+                        <div>
+                            <p class="label">Player 1</p>
+                            <p class="value" id="p1Pos">1</p>
+                        </div>
+                        <div>
+                            <p class="label">Player 2</p>
+                            <p class="value" id="p2Pos">1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="score-meta">
+                    <div>
+                        <p class="label">Last roll</p>
+                        <p class="value" id="lastRoll">–</p>
+                    </div>
+                    <div>
+                        <p class="label">Status</p>
+                        <p class="value" id="status">Ready to start</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel legend">
+                <div>
+                    <span class="chip chip-ladder"></span>
+                    <span class="label">Ladders lift you up</span>
+                </div>
+                <div>
+                    <span class="chip chip-snake"></span>
+                    <span class="label">Snakes slide you down</span>
+                </div>
+                <div class="hint">Roll a 6 to play again. First to 100 wins.</div>
+            </div>
+        </section>
+
+        <section class="board-wrap">
+            <div id="board" class="board" aria-live="polite"></div>
+        </section>
+    </div>
+
+    {{ snakes|json_script:"snakes-data" }}
+    {{ ladders|json_script:"ladders-data" }}
+    {{ state|json_script:"state-data" }}
+</body>
+</html>
